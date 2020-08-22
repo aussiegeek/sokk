@@ -4,7 +4,7 @@ import fc from "fast-check";
 export const positiveInt: fc.Arbitrary<number> = fc.integer(1, MAX_VALUE);
 export const natFloat: fc.Arbitrary<number> = fc
   .tuple(fc.nat(), fc.float())
-  .map(([a, b]) => a);
+  .map(([i, f]) => i + f);
 export const steppedValue = fc
   .tuple(fc.nat(), positiveInt)
   .map(([multiplier, step]) => [multiplier * step, step])
