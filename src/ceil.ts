@@ -11,12 +11,10 @@ import { div } from "./div";
  *
  * @example
  * `round(4, 3) => 6`
+ *
+ * @public
  */
-export function ceil(value: number, step?: number): number {
-  if (!step) {
-    step = 1;
-  }
-
+export function ceil(value: number, step = 1): number {
   const [whole, remainder] = div(value, step);
   const numSteps = remainder > 0 ? whole + 1 : whole;
   return numSteps * step;

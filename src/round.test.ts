@@ -1,4 +1,4 @@
-import { round } from "./round";
+import { round, RoundDirection } from "./round";
 import fc from "fast-check";
 import { steppedValue, positiveInt, natFloat } from "./testHelpers";
 
@@ -76,6 +76,30 @@ describe("round", () => {
         expect(round(steppedValue + step * 0.5, step)).toEqual(
           steppedValue + step
         );
+      })
+    );
+  });
+
+  test("rounding half way rounds up when configured", () => {
+    fc.assert(
+      fc.property(steppedValue, ([steppedValue, step]) => {
+        expect(
+          round(steppedValue + step * 0.5, step, {
+            roundDirection: RoundDirection.Up,
+          })
+        ).toEqual(steppedValue + step);
+      })
+    );
+  });
+
+  test("rounding half way rounds down when configured", () => {
+    fc.assert(
+      fc.property(steppedValue, ([steppedValue, step]) => {
+        expect(
+          round(steppedValue + step * 0.5, step, {
+            roundDirection: RoundDirection.Down,
+          })
+        ).toEqual(steppedValue);
       })
     );
   });
