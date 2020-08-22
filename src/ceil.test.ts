@@ -1,5 +1,6 @@
 import { ceil } from "./ceil";
 import fc from "fast-check";
+import { steppedValue, natFloat, positiveInt } from "./testHelpers";
 
 describe("ceil", () => {
   test("manual test", () => {
@@ -7,17 +8,31 @@ describe("ceil", () => {
     expect(ceil(1, 2)).toEqual(2);
   });
 
-  test("property test", () => {
+  test("value which is a multiple of step should return the same value", () => {
     fc.assert(
-      fc.property(fc.nat(), fc.integer(1, 1000000), (value, step) => {
-        const ceiled = ceil(value, step);
-        expect(ceil(value, step)).toEqual(ceiled);
-
-        expect(ceiled % step).toEqual(0);
-
-        const slightlyHigher = ceiled + step * 0.1;
-        expect(ceil(slightlyHigher, step)).toEqual(ceiled + step);
+      fc.property(steppedValue, ([steppedValue, step]) => {
+        expect(ceil(steppedValue, step)).toEqual(steppedValue);
       })
+    );
+  });
+
+  test("any value returned should be a multiple of step", () => {
+    fc.assert(
+      fc.property(natFloat, positiveInt, (value, step) => {
+        expect(ceil(value, step) % step).toEqual(0);
+      })
+    );
+  });
+  test("any value between steps should round up to the next step", () => {
+    fc.assert(
+      fc.property(
+        steppedValue,
+        fc.float(0.1, 1),
+        ([steppedValue, step], stepFraction) => {
+          const value = steppedValue + step * stepFraction;
+          expect(ceil(value, step)).toEqual(steppedValue + step);
+        }
+      )
     );
   });
 });
