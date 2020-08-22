@@ -1,0 +1,52 @@
+/**
+ * Config file for API Extractor.  For more info, please visit: https://api-extractor.com
+ */
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
+  "mainEntryPointFilePath": "<projectFolder>/dist/index.d.ts",
+  "apiReport": {
+    "enabled": true,
+    "reportFolder": "<projectFolder>/doc/",
+  },
+  /**
+   * Configures how the doc model file (*.api.json) will be generated.
+   */
+  "docModel": {
+    "enabled": true
+  },
+  "dtsRollup": {
+    "enabled": false
+  },
+  "newlineKind": "lf",
+  "messages": {
+    "extractorMessageReporting": {
+      "default": {
+        "logLevel": "warning"
+      },
+      "ae-forgotten-export": {
+        "logLevel": "warning",
+        "addToApiReportFile": false
+      },
+      "ae-incompatible-release-tags": {
+        "logLevel": "warning",
+        "addToApiReportFile": false
+      },
+      "ae-internal-missing-underscore": {
+        "logLevel": "warning",
+        "addToApiReportFile": false
+      },
+      "ae-internal-mixed-release-tag": {
+        "logLevel": "warning",
+        "addToApiReportFile": false
+      },
+      "ae-unresolved-inheritdoc-reference": {
+        "logLevel": "warning",
+        "addToApiReportFile": false
+      },
+      "ae-unresolved-inheritdoc-base": {
+        "logLevel": "warning",
+        "addToApiReportFile": false
+      }
+    }
+  }
+}
