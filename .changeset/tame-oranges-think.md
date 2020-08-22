@@ -1,5 +1,5 @@
 ---
-"sokk": minor
+"sokk": patch
 ---
 
 Added inline documentation

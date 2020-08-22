@@ -6,9 +6,4 @@
   "exclude": [
     "src/**/*.test.ts"
   ],
-  "compilerOptions": {
-    "declaration": true,
-    "noEmitOnError": true,
-    "outDir": "dist"
-  }
 }

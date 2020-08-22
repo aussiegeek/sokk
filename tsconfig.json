@@ -1,5 +1,15 @@
 {
   "extends": "@tsconfig/node12/tsconfig.json",
+  "compilerOptions": {
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "dist",
+    "noEmitOnError": true,
+  },
   "include": [
     "src/**/*.ts"
   ],

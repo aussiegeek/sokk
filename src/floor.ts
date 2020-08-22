@@ -11,12 +11,10 @@ import { div } from "./div";
  *
  * @example
  * `round(4, 3) => 3`
+ *
+ * @public
  */
-export function floor(value: number, step?: number): number {
-  if (!step) {
-    step = 1;
-  }
-
+export function floor(value: number, step = 1): number {
   const [whole] = div(value, step);
   return whole * step;
 }
