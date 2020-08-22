@@ -1,5 +1,6 @@
 import { round } from "./round";
 import fc from "fast-check";
+import { steppedValue, positiveInt, natFloat } from "./testHelpers";
 
 describe("round", () => {
   it("returns the integer", () => {
@@ -53,32 +54,55 @@ describe("round", () => {
     expect(round(4.9, 5)).toEqual(5);
   });
 
-  test("property test", () => {
+  test("value which is a multiple of step should return the same value", () => {
     fc.assert(
-      fc.property(fc.nat(), fc.nat(), (numberToRound, step) => {
-        const rounded = round(numberToRound, step);
-        if (step === 0) {
-          expect(rounded).toEqual(0);
-        } else {
-          expect(Math.abs(rounded) % step).toEqual(0);
-        }
-        const slightlyHigher = rounded + step * 0.1;
-
-        expect(round(slightlyHigher, step)).toEqual(rounded);
-
-        expect(round(rounded, step)).toEqual(rounded);
-        expect(round(rounded + step * 0.1, step)).toEqual(rounded);
-        expect(round(rounded + step * 0.2, step)).toEqual(rounded);
-        expect(round(rounded + step * 0.3, step)).toEqual(rounded);
-        expect(round(rounded + step * 0.4, step)).toEqual(rounded);
-
-        expect(round(rounded + step * 0.5, step)).toEqual(rounded + step);
-        expect(round(rounded + step * 0.6, step)).toEqual(rounded + step);
-        expect(round(rounded + step * 0.7, step)).toEqual(rounded + step);
-        expect(round(rounded + step * 0.8, step)).toEqual(rounded + step);
-        expect(round(rounded + step * 0.9, step)).toEqual(rounded + step);
-        expect(round(rounded + step, step)).toEqual(rounded + step);
+      fc.property(steppedValue, ([steppedValue, step]) => {
+        expect(round(steppedValue, step)).toEqual(steppedValue);
       })
+    );
+  });
+
+  test("any value returned should be a multiple of step", () => {
+    fc.assert(
+      fc.property(natFloat, positiveInt, (value, step) => {
+        expect(round(value, step) % step).toEqual(0);
+      })
+    );
+  });
+
+  test("rounding half way rounds up by default", () => {
+    fc.assert(
+      fc.property(steppedValue, ([steppedValue, step]) => {
+        expect(round(steppedValue + step * 0.5, step)).toEqual(
+          steppedValue + step
+        );
+      })
+    );
+  });
+
+  test("less than half way to next step rounds down", () => {
+    fc.assert(
+      fc.property(
+        steppedValue,
+        fc.float(0, 0.5),
+        ([steppedValue, step], stepFraction) => {
+          const value = steppedValue + step * stepFraction;
+          expect(round(value, step)).toEqual(steppedValue);
+        }
+      )
+    );
+  });
+
+  test("more than half way to next step rounds up", () => {
+    fc.assert(
+      fc.property(
+        steppedValue,
+        fc.float(0.5, 1),
+        ([steppedValue, step], stepFraction) => {
+          const roundValue = steppedValue + step * stepFraction;
+          expect(round(roundValue, step)).toEqual(steppedValue + step);
+        }
+      )
     );
   });
 });
