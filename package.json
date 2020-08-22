@@ -2,6 +2,12 @@
   "name": "sokk",
   "version": "0.1.0",
   "description": "Round/ceil/float to any integer multiple",
+  "keywords": [
+    "typescript",
+    "round",
+    "ceil",
+    "floor"
+  ],
   "repository": "github:aussiegeek/sokk",
   "license": "MIT",
   "main": "dist/index.js",
@@ -43,6 +49,7 @@
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-jest": "^23.20.0",
     "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-tsdoc": "^0.2.6",
     "fast-check": "^2.2.0",
     "husky": "^4.2.5",
     "jest": "^26.4.1",
