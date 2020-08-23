@@ -16,9 +16,12 @@
     "dist/*"
   ],
   "scripts": {
+    "build": "tsc --build tsconfig.build.json",
+    "doc:dev": "yarn build && yarn api-extractor run --local --verbose && yarn api-documenter markdown --input-folder temp --output-folder markdown",
+    "doc:release": "yarn build && yarn api-extractor run --verbose && yarn api-documenter markdown --input-folder temp --output-folder markdown",
     "lint": "yarn eslint src --ext .js,.jsx,.ts,.tsx --max-warnings=0 --fix",
     "lint:check": "yarn eslint src --ext .js,.jsx,.ts,.tsx --max-warnings=0 --fix",
-    "prepare": "rm -rf dist && tsc --build tsconfig.build.json",
+    "prepare": "rm -rf dist && yarn build",
     "release": "yarn prepare && changeset publish",
     "test": "jest"
   },
@@ -38,6 +41,8 @@
   "devDependencies": {
     "@aussiegeek/eslint-config-base": "0.1.0",
     "@changesets/cli": "^2.10.1",
+    "@microsoft/api-documenter": "^7.8.33",
+    "@microsoft/api-extractor": "^7.9.9",
     "@tsconfig/node12": "^1.0.7",
     "@types/eslint": "^7",
     "@types/eslint-plugin-prettier": "^3",
