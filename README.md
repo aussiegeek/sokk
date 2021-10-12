@@ -25,7 +25,7 @@ console.log(floor(18, 5))
 
 # round up to the nearest integer
 # prints 5
-console.log(ceil(4.9, 5))
+console.log(ceil(4.9))
 
 # round up to the next highest multiple of 7
 # prints 21
