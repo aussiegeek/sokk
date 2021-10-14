@@ -36,4 +36,7 @@ describe("div", () => {
       )
     );
   });
+  test("-48 / 60", () => {
+    expect(div(-48, 60)).toStrictEqual([-1, 12]);
+  });
 });
