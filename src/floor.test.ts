@@ -36,4 +36,8 @@ describe("floor", () => {
       )
     );
   });
+  
+  test("negative", () => {
+    expect(floor(-9, 8)).toBe(-16);
+  });
 });

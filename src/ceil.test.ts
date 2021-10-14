@@ -35,4 +35,7 @@ describe("ceil", () => {
       )
     );
   });
+  test("negative number should round to a greater number", () => {
+    expect(ceil(-48, 60)).toEqual(0);
+  });
 });
